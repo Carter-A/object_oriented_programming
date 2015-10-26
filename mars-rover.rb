@@ -1,106 +1,93 @@
 class Rover
-  puts "Plateau Size"
-  plateau_size = gets.chomp.split(' ')
-  puts "Rover 1 inital position and direction"
-  rover_1 = gets.chomp.split(' ')
-  puts "Rover 1 move commands"
-  rover_1_move = gets.chomp.split(//)
-  puts "Rover 2 initial position and direction"
-  rover_2 = gets.chomp.split(' ')
-  puts "Rover 2 move commands"
-  rover_2_move = gets.chomp.split(//)
+  attr_accessor :name, :pos_x, :pos_y, :direction
 
-plateau_x = plateau_size[0].to_i
-plateau_y = plateau_size[1].to_i
-rover_1_x = rover_1[0].to_i
-rover_1_y = rover_1[1].to_i
-rover_1_d = rover_1[2]
-rover_2_x = rover_2[0].to_i
-rover_2_y = rover_2[1].to_i
-rover_2_d = rover_2[2]
+  def initialize(name, pos_x, pos_y, direction)
+    @name = name
+    @pos_x = pos_x
+    @pos_y = pos_y
+    @direction = direction
+  end
 
-rover_1_move.each do |x|
-  if x == "L"
-    case rover_1_d
-    when "N" then rover_1_d = "W"
-    when "E" then rover_1_d = "N"
-    when "S" then rover_1_d = "E"
-    when "W" then rover_1_d = "S"
-    end
-  elsif x == "R"
-    case rover_1_d
-    when "N" then rover_1_d = "E"
-    when "E" then rover_1_d = "S"
-    when "S" then rover_1_d = "W"
-    when "W" then rover_1_d = "N"
-    end
-  elsif x == "M"
-    case rover_1_d
-    when "N"
-      if rover_1_y == plateau_y
-      else
-        rover_1_y += 1
-      end
-    when "E"
-      if rover_1_x == plateau_x
-      else
-        rover_1_x += 1
-      end
-    when "S"
-      if rover_1_y == 0
-      else
-        rover_1_y -= 1
-      end
-    when "W"
-      if rover_1_x == 0
-      else
-        rover_1_x -= 1
+  def move(args)
+    args.each do |x|
+      if x == "L"
+        case self.direction
+        when "N" then self.direction = "W"
+        when "E" then self.direction = "N"
+        when "S" then self.direction = "E"
+        when "W" then self.direction = "S"
+        end
+      elsif x == "R"
+        case self.direction
+        when "N" then self.direction = "E"
+        when "E" then self.direction = "S"
+        when "S" then self.direction = "W"
+        when "W" then self.direction = "N"
+        end
+      elsif x == "M"
+        case self.direction
+        when "N"
+          if self.pos_y == $p_size_y
+          else
+            self.pos_y += 1
+          end
+        when "E"
+          if self.pos_x == $p_size_x
+          else
+            self.pos_x += 1
+          end
+        when "S"
+          if self.pos_y == 0
+          else
+            self.pos_y -= 1
+          end
+        when "W"
+          if self.pos_x == 0
+          else
+            self.pos_x -= 1
+          end
+        end
       end
     end
   end
 end
+#Gets the plateau size and assigns variables to each perameter
+puts "Plateau Size"
+p_size = gets.chomp.split(' ')
+$p_size_x = p_size[0].to_i
+$p_size_y = p_size[1].to_i
 
-rover_2_move.each do |x|
-  if x == "L"
-    case rover_2_d
-    when "N" then rover_2_d = "W"
-    when "E" then rover_2_d = "N"
-    when "S" then rover_2_d = "E"
-    when "W" then rover_2_d = "S"
-    end
-  elsif x == "R"
-    case rover_2_d
-    when "N" then rover_2_d = "E"
-    when "E" then rover_2_d = "S"
-    when "S" then rover_2_d = "W"
-    when "W" then rover_2_d = "N"
-    end
-  elsif x == "M"
-    case rover_2_d
-    when "N"
-      if rover_2_y == plateau_y
-      else
-        rover_2_y += 2
-      end
-    when "E"
-      if rover_2_x == plateau_x
-      else
-        rover_2_x += 1
-      end
-    when "S"
-      if rover_2_y == 0
-      else
-        rover_2_y -= 1
-      end
-    when "W"
-      if rover_2_x == 0
-      else
-        rover_2_x -= 1
-      end
-    end
-  end
-end
 
-puts "Rover 1's new coordinates are #{rover_1_x} #{rover_1_y} and it is facing #{rover_1_d}"
-puts "Rover 2's new coordiantes are #{rover_2_x} #{rover_2_y} and it is facing #{rover_2_d}"
-end
+#gets rover 1's inital position
+puts "Rover 1 initial position and direction(x, y, NESW)"
+r_1 = gets.chomp.split(' ')
+r_1_x = r_1[0].to_i
+r_1_y = r_1[1].to_i
+r_1_d = r_1[2]
+
+#get rover 1's move commands
+puts "Rover 1's move commands"
+r_1_m = gets.chomp.split(//)
+
+#gets rover 2's initial position
+puts "Rover 2's initial position and direction(x, y, NESW)"
+r_2 = gets.chomp.split(' ')
+r_2_x = r_2[0].to_i
+r_2_y = r_2[1].to_i
+r_2_d = r_2[2]
+
+#get rover 2's move commands
+puts "Rover 2's move commands"
+r_2_m = gets.chomp.split(//)
+
+#initialize both rovers
+rover1 = Rover.new("rover1", r_1_x, r_1_y, r_1_d)
+rover2 = Rover.new("rover2", r_2_x, r_2_y, r_2_d)
+
+#move the rovers
+rover1.move(r_1_m)
+rover2.move(r_2_m)
+
+#print their final positions
+puts "Rover 1's final position is #{rover1.pos_x} #{rover1.pos_y} and is facing #{rover1.direction}"
+puts "Rover 2's final position is #{rover2.pos_x} #{rover2.pos_y} and is facing #{rover2.direction}"
