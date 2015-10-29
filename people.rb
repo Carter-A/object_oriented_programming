@@ -4,6 +4,10 @@ class Person
   def initialize
     @name = name
   end
+
+  def greeting
+    puts "Hi, my name is #{name}"
+  end
 end
 
 #student class that enherits from person
@@ -11,20 +15,12 @@ class Student < Person
   def learn
     puts "I get it!"
   end
-
-  def greeting
-    puts "Hi, my name is #{name}"
-  end
 end
 
 #teacher class the enherits from person
 class Teacher < Person
   def teach
     puts "Everything in Ruby is an Object"
-  end
-
-  def greeting
-    puts "Hi, my name is #{name}"
   end
 end
 
